@@ -3,7 +3,7 @@
     <center>
         <br>
         <h2>TAMBAH DATA SISWA</h2>
-        <form method="POST" action="/guru/store">
+        <form method="POST" action="/siswa/store">
             @csrf
             <table width="50%">
                 <tr>

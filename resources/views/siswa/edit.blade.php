@@ -17,8 +17,8 @@
                 <tr>
                     <td class="bar">JENIS KELAMIN</td>
                     <td class="bar">
-                        <input type="radio" name="jk" value="L" {{ $guru->jk == 'L' ? 'checked' : '' }}>LAKI LAKI
-                        <input type="radio" name="jk" value="P" {{ $guru->jk == 'P' ? 'checked' : '' }}>PERUMPUAN
+                        <input type="radio" name="jk" value="L" {{ $siswa->jk == 'L' ? 'checked' : '' }}>LAKI LAKI
+                        <input type="radio" name="jk" value="P" {{ $siswa->jk == 'P' ? 'checked' : '' }}>PERUMPUAN
                     </td>
                 </tr>
                 <tr>

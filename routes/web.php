@@ -7,6 +7,8 @@ use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\MapelController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\MengajarController;
+use App\Http\Controllers\NilaiController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,6 +29,24 @@ use Inertia\Inertia;
 // Route::post('/login/guru',[IndexController::class,'loginGuru']);
 // Route::get('/home',[IndexController::class,'home']);
 // Route::get('/logout',[IndexController::class,'logout']);
+
+Route::prefix('nilai')->group(function() {
+    Route::get('/index',[NilaiController::class, 'index']);
+    Route::get('/create',[NilaiController::class, 'create']);
+    Route::post('/store',[NilaiController::class, 'store']);
+    Route::get('/edit/{nilai}',[NilaiController::class, 'edit']);
+    Route::post('/update/{nilai}',[NilaiController::class, 'update']);
+    Route::get('/destroy/{nilai}',[NilaiController::class, 'destroy']);
+}); 
+
+Route::prefix('mengajar')->group(function() {
+    Route::get('/index',[MengajarController::class, 'index']);
+    Route::get('/create',[MengajarController::class, 'create']);
+    Route::post('/store',[MengajarController::class, 'store']);
+    Route::get('/edit/{mengajar}',[MengajarController::class, 'edit']);
+    Route::post('/update/{mengajar}',[MengajarController::class, 'update']);
+    Route::get('/destroy/{mengajar}',[MengajarController::class, 'destroy']);
+}); 
 
 Route::prefix('jurusan')->group(function() {
     Route::get('/index',[JurusanController::class, 'index']);

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Guru;
 use App\Models\Kelas;
-use App\Models\Nilai;
-use App\Models\Siswa;
+use App\Models\Mapel;
+use App\Models\Mengajar;
 
-class SiswaController extends Controller
+class MengajarController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +17,8 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        return view('siswa.index', [
-            'siswa' => Siswa::all()
+        return view('mengajar.index', [
+            'mengajar' => Mengajar::all()
         ]);
     }
 
@@ -28,8 +29,10 @@ class SiswaController extends Controller
      */
     public function create()
     {
-        return view('siswa.create', [
-            'kelas' => Kelas::all()
+        return view('mengajar.create', [
+            'guru' => Guru::all(),
+            'mapel' => Mapel::all(),
+            'kelas' => Kelas::all(),
         ]);
     }
 
@@ -41,16 +44,13 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $data_siswa = $request->validate([
-            'nis' => ['required', 'numeric'],
-            'nama_siswa' => ['required'],
-            'jk' => ['required'],
-            'alamat' => ['required'],
+        $data_mengajar = $request->validate([
+            'guru_id' => ['required'],
+            'mapel_id' => ['required'],
             'kelas_id' => ['required'],
-            'password' => ['required'],
         ]);
-        Siswa::create($data_siswa);
-        return redirect('/siswa/index')->with('success', 'Data Siswa Berhasil Ditambah');
+        Mengajar::create($data_mengajar);
+        return redirect('/mengajar/index')->with('success', 'Data Mengajar Berhasil Ditambah');
     }
 
     /**
@@ -70,11 +70,14 @@ class SiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Siswa $siswa)
+    public function edit(Mengajar $mengajar)
     {
-        return view('siswa.edit', [
-            'siswa' => $siswa,
+        return view('mengajar.edit', [
+            'mengajar' => $mengajar,
+            'guru' => Guru::all(),
+            'mapel' => Mapel::all(),
             'kelas' => Kelas::all()
+
         ]);
     }
 
@@ -85,18 +88,15 @@ class SiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Siswa $siswa)
+    public function update(Request $request, Mengajar $mengajar)
     {
-        $data_siswa = $request->validate([
-            'nis' => ['required'],
-            'nama_siswa' => ['required'],
-            'jk' => ['required'],
-            'alamat' => ['required'],
+        $data_mengajar = $request->validate([
+            'guru_id' => ['required'],
+            'mapel_id' => ['required'],
             'kelas_id' => ['required'],
-            'password' => ['required'],
         ]);
-        $siswa->update($data_siswa);
-        return redirect('/siswa/index')->with('success', 'Data Siswa Berhasil di Update');
+        $mengajar->update($data_mengajar);
+        return redirect('/mengajar/index')->with('success', 'Data Mengajar Berhasil di Update');
     }
 
     /**
@@ -105,16 +105,9 @@ class SiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Siswa $siswa)
+    public function destroy(Mengajar $mengajar)
     {
-        $nilai = Nilai::where('siswa_id',$siswa->id)->first();
-
-        if($nilai) {
-            return back()->with('error', "$siswa->nama_siswa masih digunakan di menu nilai");
-        }
-
-        $siswa->delete();
-
-        return back()->with('success', 'Data Siswa berhasil Di hapus');
+        $mengajar->delete();
+        return back()->with('success', "Data Mengajar Berhasil Di hapus");
     }
 }
